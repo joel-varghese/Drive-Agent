@@ -81,7 +81,7 @@ export default function Home() {
         <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">
           Cloud assistance on the go,
           <br />
-          <span className="text-muted-foreground">for your own stack.</span>
+          <span className="text-muted-foreground">for optimum scheduling.</span>
         </h1>
         <p className="mt-4 max-w-xl text-lg text-muted-foreground">
           Agentic system that automates busy work such as sending emails, generating calender invites and searching cloud spaces with ease.
@@ -94,7 +94,7 @@ export default function Home() {
             Open Dashboard
           </Link>
           <a
-            href="https://github.com/akhileshrangani4/rocky"
+            href="https://github.com/joel-varghese/Drive-Agent"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-md border border-border px-6 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
@@ -161,7 +161,7 @@ export default function Home() {
               Sign in
             </Link>
             <a
-              href="https://github.com/akhileshrangani4/rocky"
+              href="https://github.com/joel-varghese/Drive-Agent"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md border border-border px-6 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
