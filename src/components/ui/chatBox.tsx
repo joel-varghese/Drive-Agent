@@ -15,7 +15,7 @@ export default function ChatBox() {
     const sendMessage = async () => {
         if (!input.trim()) return;
 
-        const newMessages = [
+        const newMessages: Message[] = [
             ...messages,
             { role: "user", content: input },
         ];
@@ -25,16 +25,19 @@ export default function ChatBox() {
         setLoading(true);
 
         try {
-            const res = await fetch("/api/chat", {
+            const res = await fetch("https://agentic-flows.onrender.com/chat", {
                 method: "POST",
-                body: JSON.stringify({ messages: newMessages }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: input }),
             });
 
-            const data = await res.join();
+            const data = await res.json();
 
             setMessages([
                 ...newMessages,
-                { role: "assistant", content: data.reply.content },
+                { role: "assistant", content: data.response },
             ]);
         } catch (err) {
             console.error(err);
