@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rendezvous - Agentic Frontend
 
-## Getting Started
+Rendezvous is the frontend for an agentic system.  
+The UI is built with Next.js, while the agent runtime is hosted as a separate Python backend service.
 
-First, run the development server:
+## Architecture Overview
+
+This project uses a split deployment model:
+
+- **Frontend (`drive-agent`)**
+  - Stack: Next.js + React
+  - Responsibility: UI, auth/session handling, user interaction, task initiation, status display
+  - Deployment: **Vercel** (link coming soon)
+
+- **Backend (separate Python repository)**
+  - Stack: Python agent runtime (LangGraph/LangChain style graph orchestration)
+  - Responsibility: tool execution, agent reasoning, memory/state graph, workflow control
+  - Deployment: **Render**
+
+## Agent Backend Graph Pattern
+
+The backend follows a graph-based execution loop similar to:
+
+- `START -> chatbot`
+- `chatbot -> tools` (when tool calls are needed)
+- `tools -> chatbot` (returns tool results for follow-up reasoning)
+- `chatbot -> END` (when no further tools are needed)
+
+This is implemented using `StateGraph`, `ToolNode`, and a memory checkpointer (`MemorySaver`) in the Python backend.
+
+## How Frontend and Backend Communicate
+
+1. User submits a request from the Next.js frontend.
+2. Frontend calls the Render-hosted Python API (HTTP/JSON).
+3. Python backend runs the agent graph:
+   - routes to `chatbot`
+   - conditionally calls tools
+   - loops back with results until completion
+4. Backend returns final response (and optionally intermediate events/logs).
+5. Frontend renders the output and task state to the user.
+
+## Why This Split Architecture
+
+- **Independent scaling**: UI and agent runtime scale separately based on load.
+- **Clear separation of concerns**: frontend focuses on UX; backend focuses on orchestration and tools.
+- **Safer deployments**: UI updates do not require redeploying agent logic, and vice versa.
+- **Language flexibility**: Next.js for product/UI speed, Python for mature agent ecosystem.
+- **Operational isolation**: long-running agent jobs stay in backend infra designed for worker/API behavior.
+
+## Local Frontend Development
+
+Run the frontend locally:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Frontend: **Vercel** (link coming soon)
+- Backend agent service: **Render** (separate Python repository)
