@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InteractiveDotBackground } from "@/components/ui/interactive-dot-background";
 
 const platforms = [
   { name: "Email", icon: "E", color: "bg-[#334155]" },
@@ -43,9 +44,11 @@ const capabilities = [
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="relative flex min-h-screen flex-col bg-[#06080f] text-white">
+      <InteractiveDotBackground />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(56,78,132,0.2),transparent_55%)]" />
       {/* Nav */}
-      <header className="border-b border-border">
+      <header className="relative z-10 border-b border-white/10">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <span className="text-lg font-bold">Rendezvous</span>
           <div className="flex items-center gap-3">
@@ -66,7 +69,7 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <section className="mx-auto flex max-w-5xl flex-col items-center px-4 pt-24 pb-16 text-center">
+      <section className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pt-24 pb-16 text-center">
         <div className="flex items-center gap-2 mb-6">
           {platforms.map((p) => (
             <span
@@ -105,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* How it works */}
-      <section className="border-t border-border bg-muted/30">
+      <section className="relative z-10 border-t border-white/10 bg-white/5">
         <div className="mx-auto max-w-5xl px-4 py-16">
           <h2 className="text-center text-2xl font-bold tracking-tight mb-2">
             How it works
@@ -122,7 +125,7 @@ export default function Home() {
       </section>
 
       {/* Capabilities */}
-      <section className="mx-auto max-w-5xl px-4 py-16">
+      <section className="relative z-10 mx-auto max-w-5xl px-4 py-16">
         <h2 className="text-center text-2xl font-bold tracking-tight mb-2">
           What this starter supports
         </h2>
@@ -145,7 +148,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border">
+      <section className="relative z-10 border-t border-white/10">
         <div className="mx-auto max-w-5xl px-4 py-16 text-center">
           <h2 className="text-2xl font-bold tracking-tight mb-2">
             Get started
@@ -173,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border">
+      <footer className="relative z-10 border-t border-white/10">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 text-xs text-muted-foreground">
           <span>Rendezvous</span>
           <span>Built with Next.js and Supabase</span>
