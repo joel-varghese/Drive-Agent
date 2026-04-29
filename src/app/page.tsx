@@ -46,6 +46,7 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-[#06080f] text-white">
       <InteractiveDotBackground />
+      <div className="pointer-events-none fixed inset-y-0 left-1/2 z-0 w-full max-w-5xl -translate-x-1/2 bg-[#06080f]" />
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(56,78,132,0.2),transparent_55%)]" />
       {/* Nav */}
       <header className="relative z-10 border-b border-white/10">
@@ -100,7 +101,7 @@ export default function Home() {
             href="https://github.com/joel-varghese/Drive-Agent"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md border border-border px-6 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+              className="rounded-md border border-white/30 px-6 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
           >
             View Source
           </a>
@@ -167,7 +168,7 @@ export default function Home() {
               href="https://github.com/joel-varghese/Drive-Agent"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md border border-border px-6 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+              className="rounded-md border border-white/30 px-6 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
             >
               GitHub
             </a>
