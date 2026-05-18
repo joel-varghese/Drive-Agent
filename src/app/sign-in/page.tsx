@@ -13,6 +13,7 @@ import {
 export default function SignInPage() {
   async function continueWith(provider: "github" | "google") {
     const redirectTo = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/dashboard`;
+    console.log("redirectTo:", redirectTo);
     await signInWithProvider(provider, redirectTo);
   }
 
