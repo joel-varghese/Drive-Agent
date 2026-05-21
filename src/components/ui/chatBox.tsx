@@ -64,7 +64,7 @@ export default function ChatBox() {
         {loading && <div className="text-sm">Thinking...</div>}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         <input
           className="flex-1 border rounded-md px-3 py-2 text-sm"
           value={input}
@@ -78,12 +78,18 @@ export default function ChatBox() {
         />
         <button
           onClick={sendMessage}
-          className="px-4 py-2 bg-primary text-white rounded-md flex items-center justify-center"
+          className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
           disabled={loading}
           aria-label="Send"
         >
-          {/* Send arrow icon (SVG) */}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+          {/* Send arrow icon (SVG) with explicit color */}
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            strokeWidth={2} 
+            stroke="#fff" 
+            className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6" />
           </svg>
         </button>

@@ -6,17 +6,17 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
 
-  console.log("=== CALLBACK HIT ===");
+  // console.log("=== CALLBACK HIT ===");
   const requestUrl = new URL(request.url);
 
-  console.log("full url:", request.url);
+  // console.log("full url:", request.url);
 
   const code = requestUrl.searchParams.get("code");
   
-  console.log("code exists:", !!code);
+  // console.log("code exists:", !!code);
   const next = requestUrl.searchParams.get("next") ?? "/dashboard";
 
-  console.log("next:", next);
+  // console.log("next:", next);
 
   const response = NextResponse.redirect(
     new URL(next, requestUrl.origin),
@@ -49,14 +49,14 @@ export async function GET(request: NextRequest) {
     );
     const { data, error} = await supabase.auth.exchangeCodeForSession(code);
     
-    console.log("exchange error:", error);
+    // console.log("exchange error:", error);
 
-    console.log(
-      "session user:",
-      data?.user?.email,
-    );
+    // console.log(
+    //   "session user:",
+    //   data?.user?.email,
+    // );
   }
 
-  console.log("=== CALLBACK END ===")
+  // console.log("=== CALLBACK END ===")
   return response;
 }
