@@ -70,12 +70,22 @@ export default function ChatBox() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask your agent..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !loading) {
+              sendMessage();
+            }
+          }}
         />
         <button
           onClick={sendMessage}
-          className="px-4 py-2 bg-primary text-white rounded-md"
+          className="px-4 py-2 bg-primary text-white rounded-md flex items-center justify-center"
+          disabled={loading}
+          aria-label="Send"
         >
-          Send
+          {/* Send arrow icon (SVG) */}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6" />
+          </svg>
         </button>
       </div>
     </div>
