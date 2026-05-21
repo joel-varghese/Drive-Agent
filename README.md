@@ -60,5 +60,5 @@ Then open [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
 
-- Frontend: **Vercel** (link coming soon)
-- Backend agent service: **Render** (separate Python repository)
+- Frontend: **Vercel** (https://drive-agent-six.vercel.app/)
+- Backend agent service: **Render** (https://github.com/joel-varghese/Agentic_flows)
