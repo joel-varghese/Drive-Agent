@@ -30,7 +30,11 @@ export default function ChatBox() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ message: input }),
+                body: JSON.stringify({ 
+                  message: input,
+                  user_id: "web-user",
+                  channel: "web", 
+                }),
             });
 
             const data = await res.json();
