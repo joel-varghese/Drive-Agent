@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 type Message = {
     role: "user" | "assistant";
@@ -11,7 +12,16 @@ export default function ChatBox() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
+    const { user, loading: authLoading } = useAuth();
 
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    console.log(user?.id);
+    console.log(user?.email);
+    
     const sendMessage = async () => {
         if (!input.trim()) return;
 
@@ -32,7 +42,7 @@ export default function ChatBox() {
                 },
                 body: JSON.stringify({ 
                   message: input,
-                  user_id: "web-user",
+                  user_id: user?.id,
                   channel: "web", 
                 }),
             });
