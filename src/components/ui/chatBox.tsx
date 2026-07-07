@@ -15,7 +15,28 @@ export default function ChatBox() {
     const { user, loading: authLoading } = useAuth();
 
 
-    if (loading) {
+    useEffect(() => {
+      if (!user) return;
+
+      const userId = user.id;
+
+      async function loadHistory() {
+        try {
+          const res = await fetch(
+            `https://agentic-flows.onrender.com/history/${userId}`
+          );
+
+        const history = await res.json();
+        
+        setMessages(history)
+      } catch (err) {
+        console.error("Failed to load history:", err);
+      }
+    }
+
+    loadHistory();
+    }, [user]);
+    if (authLoading) {
       return <div>Loading...</div>;
     }
 
