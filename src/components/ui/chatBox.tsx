@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import ReactMarkdown from "react-markdown";
 
 type Message = {
     role: "user" | "assistant";
@@ -93,7 +94,7 @@ export default function ChatBox() {
                 : "bg-muted"
             }`}
           >
-            {m.content}
+            <ReactMarkdown>{m.content}</ReactMarkdown>
           </div>
         ))}
         {loading && <div className="text-sm">Thinking...</div>}
