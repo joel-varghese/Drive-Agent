@@ -75,6 +75,10 @@ export default function ChatBox() {
                 ...newMessages,
                 { role: "assistant", content: data.response },
             ]);
+
+            if (data.auth_required && data.auth_url) {
+              window.open(data.auth_url, "_blank")
+            }
         } catch (err) {
             console.error(err);
         }
