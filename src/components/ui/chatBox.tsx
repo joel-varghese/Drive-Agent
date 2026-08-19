@@ -1,12 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
 import ReactMarkdown from "react-markdown";
+
+type AuthInfo = {
+    provider: string;
+    service: string;
+    user_email: string;
+    auth_url: string;
+};
 
 type Message = {
     role: "user" | "assistant";
     content: string;
+    auth?: AuthInfo;
 };
 
 export default function ChatBox() {
@@ -15,6 +24,9 @@ export default function ChatBox() {
     const [loading, setLoading] = useState(false);
     const { user, loading: authLoading } = useAuth();
 
+    const threadId = useRef<string>(
+      crypto.randomUUID()
+    )
 
     useEffect(() => {
       if (!user) return;
@@ -65,19 +77,30 @@ export default function ChatBox() {
                 body: JSON.stringify({ 
                   message: input,
                   user_id: user?.id,
-                  channel: "web", 
+                  channel: "web",
+                  thread_id: threadId.current, 
                 }),
             });
 
             const data = await res.json();
 
-            setMessages([
-                ...newMessages,
-                { role: "assistant", content: data.response },
-            ]);
-
-            if (data.auth_required && data.auth_url) {
-              window.open(data.auth_url, "_blank")
+            if (data.type === "auth_required" && data.auth) {
+                setMessages([
+                  ...newMessages,
+                  {
+                    role: "assistant",
+                    content: data.response || data.auth.message,
+                    auth: data.auth,
+                  },
+                ]);
+            } else {
+                setMessages([
+                  ...newMessages,
+                  {
+                    role: "assistant",
+                    content: data.response || "",
+                  },
+                ]);
             }
         } catch (err) {
             console.error(err);
@@ -99,6 +122,31 @@ export default function ChatBox() {
             }`}
           >
             <ReactMarkdown>{m.content}</ReactMarkdown>
+
+            {m.auth && (
+              <div className="mt-3 border rounded-lg p-3 bg-background">
+                <div className="font-medium mb-1">
+                    Connect {m.auth.service}
+                </div>
+
+                <div className="text-xs text-muted-foreground mb-3">
+                    Sign in with {m.auth.user_email} to give your agent access.
+                </div>
+
+                <button
+                  onClick={() => {
+                    window.open(
+                      m.auth!.auth_url,
+                      "_blank",
+                      "noopener,noreferrer"
+                    );
+                  }}
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+                >
+                  Connect {m.auth.service}
+                </button>
+              </div>
+            )}
           </div>
         ))}
         {loading && <div className="text-sm">Thinking...</div>}
